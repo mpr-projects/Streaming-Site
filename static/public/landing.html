@@ -1,0 +1,85 @@
+<article>
+    <hgroup>
+        <h1>Demonstration Streaming Site</h1>
+        <h2>Create an account, log in and watch some cool videos.</h2>
+    </hgroup>
+    <p>
+        This page is a demonstration which uses flask as a backend, and HTML, CSS and JavaScript on the front end.
+        The code and all data is saved in AWS S3 buckets. The website uses AWS's Elastic Beanstalk, and all data is
+        uploaded via the command line utility `eb deploy` (and various other `eb` commands were used for debugging).
+        The page was created and set up on AWS in approximately 1.5 days. I used an LLM as a helper but they are not
+        very good in more complicated setups so my own code-understanding was crucial to get it setup so quickly (most
+        time was spent on setting up AWS users, roles and permissions).
+        Note, currently the page is NOT encrypted (it's not using https because I haven't linked it to a domain name),
+        this will be added later. All code can be found on <a href="https://github.com/mpr-projects/Streaming-Site" target="_blank">github</a>.
+    </p>
+</article>
+
+<article>
+    <details open>
+        <summary><h3>General Design</h3></summary>
+            I use a single page setup. The index.html page is always shown and it contains a navigation bar
+            on top and a content section beneath it. The content of the navigation bar is populated in
+            JavaScript and depends on whether the user is logged in or not. The current page is saved
+            in the window.location.hash attribute. A link changes that attribute and a listener on
+            it loads the appropriate page into the content section. The video page uses flexbox for alignment.
+    </details>
+</article>
+
+<article>
+    <details open>
+        <summary><h3>Security</h3></summary>
+        One objective of this test-website is to create a public section and a protected
+        section. A user should only be able to access the protected section after they've
+        registered and logged in. To prevent unauthorized access to the protected section
+        we use HttpOnly cookies and the 'double-submit' cookie pattern. It works as follows:
+        <ul>
+            <li>
+                HttpOnly cookies cannot be read by client scripts. So users can't access or
+                edit them (even with code injections). However, our backend can set them to
+                indicate that a user is logged in. When a page is loaded then the backend
+                checks if the cookie exists. If it doesn't exist then the user is redirected
+                to the login page. The cookie is deleted when a user logs out. Since users
+                can't access this cookie, they can't pretend to be logged in (preventing
+                Cross-Site Scripting attacks). This cookie is set automatically by Flask's 
+                LoginManager.
+            </li>
+            <li>
+                The HttpOnly cookie by itself doesn't fully protect the website. If
+                a user is logged in and opens another website, then that other website could send
+                requests to our website. Since the user is logged in, the HttpOnly cookie exists
+                so the request will be executed. To ensure that only requests from our own
+                website are executed the backend adds a random string (the CSRF token) as a
+                cookie. This cookie can be read by JavaScript. Any request to our backend must
+                then include the value of this cookie, ie the CSRF token. A request is only
+                processed by the backend if the CSRF token received matches the one that was set
+                before. The CSRF token is changed after every request for added security. This
+                prevents Cross-Site Request Forgery (CSRF) attacks.
+            </li>
+        </ul>
+    </details>
+</article>
+
+<article>
+    <details open>
+        <summary><h3>Video Streaming</h3></summary>
+        Videos are uploaded to the S3 bucket with a local upload script. For each video three files
+        can be uploaded: the video file, a thumbnail and a text file containing the label of the video.
+        The 'Video' page (which can only be seen when you're logged in) loads the contents of the S3
+        bucket, processes them and returns them to JavaScript. JavaScript then creates the HTML code
+        and populates the appropriate part of the 'Video' HTML page.
+    </details>
+</article>
+
+
+<article>
+    <details open>
+        <summary><h3>Potential Improvements</h3></summary>
+        <ul>
+            <li>Link to domain for https encryption</li>
+            <li>E-Mail confirmation: Right now there is no confirmation to check if the email address provided by the user is valid.</li>
+            <li>DRM protection: Adding DRM protection to the videos would be nice to prevent them from being downloaded easily.</li>
+            <li>A nicer layout.</li>
+        </ul>
+    </details>
+</article>

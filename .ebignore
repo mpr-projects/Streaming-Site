@@ -1,0 +1,25 @@
+# Python virtual environment
+venv/
+__pycache__/
+
+# Local development files
+.python-version
+*.pyc
+*.pyo
+*.pyd
+
+# CRITICAL: Ignore sensitive files like private keys
+*.pem
+
+# Ignore local notes and credentials
+readme.txt
+
+# IDE / Editor configuration
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+
+# video files
+videos
