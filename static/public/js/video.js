@@ -2,11 +2,9 @@ import { getCookie } from "./utils.js";
 
 
 // Dashboard/video page specific functionality (to be called after content is loaded)
-export const initializeDashboard = async (currentPageUrl) => {
-    console.log("initializeDashboard called for page:", currentPageUrl);
-    if (currentPageUrl === '/protected/dashboard.html') {
-        await loadVideoList();
-    }
+export const initializeDashboard = async () => {
+    console.log("Initializing dashboard...");
+    await loadVideoList();
 };
 
 

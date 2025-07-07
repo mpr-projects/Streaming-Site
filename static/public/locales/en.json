@@ -1,0 +1,20 @@
+{
+  "nav_overview": "Overview",
+  "nav_videos": "Videos",
+  "nav_logout": "Logout",
+  "nav_signup": "Sign Up",
+  "nav_login": "Login",
+  "login_title": "Login",
+  "login_subtitle": "Welcome back!",
+  "login_button": "Login",
+  "login_footer_text": "Don't have an account? ",
+  "signup_title": "Sign Up",
+  "signup_subtitle": "Create your account",
+  "signup_button": "Sign Up",
+  "signup_footer_text": "Already have an account? ",
+  "email_placeholder": "Email",
+  "password_placeholder": "Password",
+  "dashboard_welcome_title": "Welcome to the Video Page",
+  "dashboard_welcome_p1": "Here you can access some of the videos that I made about my recent projects. Note that the video resolution on this page is lower than on ",
+  "dashboard_welcome_p2": " to save bandwidth and not all videos have been uploaded."
+}

@@ -1,15 +1,17 @@
 <article class="auth-form">
     <hgroup>
-        <h1>Login</h1>
-        <h2>Welcome back!</h2>
+        <h1 data-i18n="login_title">Login</h1>
+        <h2 data-i18n="login_subtitle">Welcome back!</h2>
     </hgroup>
     <form id="login-form">
-        <input type="email" name="email" placeholder="Email" aria-label="Email" autocomplete="email" required>
-        <input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="current-password" required>
-        <button type="submit">Login</button>
+        <input type="email" name="email" placeholder="Email" aria-label="Email" autocomplete="email" required data-i18n-placeholder="email_placeholder">
+        <input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="current-password" required data-i18n-placeholder="password_placeholder">
+        <button type="submit" data-i18n="login_button">Login</button>
     </form>
     <p id="error-message" style="color: red;"></p>
     <footer>
-        <small>Don't have an account? <a href="/signup.html" class="nav-link">Sign Up</a></small>
+        <small>
+            <span data-i18n="login_footer_text">Don't have an account? </span><a href="/signup.html" class="nav-link" data-i18n="nav_signup">Sign Up</a>
+        </small>
     </footer>
 </article>

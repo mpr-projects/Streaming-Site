@@ -1,0 +1,73 @@
+/*
+ * Styles for the language switcher component.
+ * Place this in a new file and link it from your main index.html.
+ */
+
+.language-switcher {
+    position: relative;
+}
+
+.language-switcher .current-lang {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.language-switcher .current-lang img {
+    width: 1.2rem;
+    height: 1.0rem;
+    border-radius: 4px;
+    display: block;
+    border: 1px solid var(--color-border-light);
+}
+
+.language-switcher .lang-dropdown {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #e5e2e2;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    list-style: none;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+    /* min-width: 150px; */
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.language-switcher .lang-dropdown.is-open {
+    display: block; /* Show when active */
+}
+
+.language-switcher .lang-dropdown li {
+    margin: 0;
+    padding: 0;
+}
+
+.language-switcher .lang-dropdown li a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Space between flag and text */
+    padding-top: 0.25rem;
+    padding-left: 1.0rem;
+    padding-right: 2.1rem;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.language-switcher .lang-dropdown li a:hover {
+    background-color: var(--color-primary-light);
+}
+
+.language-switcher .lang-dropdown img {
+    width: 1.2rem;
+    height: 1.0rem;
+    border-radius: 3px;
+}

@@ -4,19 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Streaming Site</title>
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
     <link rel="stylesheet" href="/css/style.css">
-
+    <link rel="stylesheet" href="/css/language-switcher.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/loader.css">
 </head>
-<body>
+
+<body class="is-loading">
+    <div id="page-loader" class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+
     <header class="container">
         <nav>
             <ul>
-                <li><a href="/landing.html" class="nav-link">Overview</a></li>
+                <li><a href="/landing.html" class="nav-link" data-i18n="nav_overview">Overview</a></li>
             </ul>
-            <ul id="auth-links">
-                <!-- This section will be populated by JavaScript -->
-            </ul>
+            <div class="nav-right">
+                <ul id="auth-links">
+                    <!-- This section will be populated by JavaScript -->
+                </ul>
+                <div class="language-switcher">
+                    <button class="current-lang" aria-label="Change language" aria-haspopup="true" aria-expanded="false">
+                        <!-- The default flag -->
+                        <img src="/img/flags/us.svg" alt="English" data-lang="en">
+                    </button>
+                    <ul class="lang-dropdown">
+                        <!-- Language options will be populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
 

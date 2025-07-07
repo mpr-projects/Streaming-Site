@@ -1,4 +1,5 @@
 import { getCookie } from "./utils.js";
+import { applyTranslations } from './i18n.js';
 
 const authLinks = document.getElementById('auth-links');
 
@@ -12,16 +13,17 @@ export const updateAuthUI = async () => {
         if (response.ok) {
             // User is logged in
             authLinks.innerHTML = `
-                <li><a href="/protected/dashboard.html" class="nav-link">Videos</a></li>
-                <li><a href="#" id="logout-link">Logout</a></li>
+                <li><a href="/protected/dashboard.html" class="nav-link" data-i18n="nav_videos">Videos</a></li>
+                <li><a href="#" id="logout-link" data-i18n="nav_logout">Logout</a></li>
             `;
         } else {
             // User is logged out
             authLinks.innerHTML = `
-                <li><a href="/signup.html" class="nav-link secondary">Sign Up</a></li>
-                <li><a href="/login.html" class="nav-link">Login</a></li>
+                <li><a href="/signup.html" class="nav-link secondary" data-i18n="nav_signup">Sign Up</a></li>
+                <li><a href="/login.html" class="nav-link" data-i18n="nav_login">Login</a></li>
             `;
         }
+        applyTranslations(); // Re-apply translations to the new nav links
     } catch (error) {
         console.error('Auth check failed:', error);
         authLinks.innerHTML = `<li><a href="/login.html" class="nav-link">Login</a></li>`;

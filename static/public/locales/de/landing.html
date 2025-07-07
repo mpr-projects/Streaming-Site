@@ -1,0 +1,97 @@
+<article>
+    <hgroup>
+        <h1>Demonstrations-Streaming-Seite</h1>
+        <h2>Konto erstellen, anmelden, und coole Videos schauen.</h2>
+    </hgroup>
+    <p>
+        Diese Seite ist eine Demonstration, die Flask als Backend und HTML, CSS und JavaScript im Frontend verwendet.
+        Der Code und alle Daten werden in AWS S3-Buckets gespeichert. Die Website nutzt AWS Elastic Beanstalk, und alle Daten werden
+        über das Kommandozeilen-Tool `eb deploy` hochgeladen (verschiedene andere `eb`-Befehle wurden für das Debugging verwendet).
+        Die Seite wurde in etwa 1,5 Tagen erstellt und auf AWS eingerichtet. Ich habe einen LLM als Helfer verwendet, da diese aber bei
+        komplizierteren Setups nicht sehr gut sind, war mein eigenes Code-Verständnis entscheidend, um die Website so schnell einzurichten 
+        (am längsten dauerte die Einrichtung von AWS-Benutzern, -Rollen und -Berechtigungen).
+        Hinweis: Derzeit ist die Seite NICHT verschlüsselt (sie verwendet kein HTTPS, da ich sie noch nicht mit einem Domainnamen verknüpft habe),
+        das wird später hinzugefügt. Der gesamte Code ist auf <a href="https://github.com/mpr-projects/Streaming-Site" target="_blank">GitHub</a> zu finden.
+    </p>
+</article>
+
+<article>
+    <details open>
+        <summary><h3>Allgemeines Design</h3></summary>
+            Ich verwende ein Single-Page-Setup. Die `index.html`-Seite wird immer angezeigt und enthält eine Navigationsleiste
+            oben und einen Inhaltsbereich darunter. Der Inhalt der Navigationsleiste wird in
+            JavaScript dynamisch erstellt und hängt davon ab, ob der Benutzer angemeldet ist oder nicht. Die aktuelle Seite wird
+            im `window.location.hash`-Attribut gespeichert. Links ändern dieses Attribut, und ein Listener auf dem Attribut
+            lädt die entsprechende Seite in den Inhaltsbereich. Die Videoseite verwendet Flexbox für die Ausrichtung.
+    </details>
+</article>
+
+<article>
+    <details open>
+        <summary><h3>Sicherheit</h3></summary>
+        Ein Ziel dieser Test-Website ist es, einen öffentlichen und einen geschützten
+        Bereich zu erstellen. Ein Benutzer sollte nur nach Registrierung und Anmeldung auf den geschützten Bereich
+        zugreifen können. Um unbefugten Zugriff auf den geschützten Bereich zu verhindern,
+        verwenden wir HttpOnly-Cookies und das „Double-Submit-Cookie“-Muster. Das funktioniert wie folgt:
+        <ul>
+            <li>
+                HttpOnly-Cookies können nicht von Client-Skripten gelesen werden. Benutzer können sie also nicht aufrufen oder
+                bearbeiten (selbst bei Code-Injections). Unser Backend kann sie jedoch setzen, um
+                anzuzeigen, dass ein Benutzer angemeldet ist. Wenn eine Seite geladen wird, prüft das Backend,
+                ob der Cookie existiert. Wenn er nicht existiert, wird der Benutzer zur
+                Anmeldeseite weitergeleitet. Der Cookie wird gelöscht, wenn sich ein Benutzer abmeldet. Da Benutzer
+                nicht auf dieses Cookie zugreifen können, können sie nicht vorgeben, angemeldet zu sein (was
+                Cross-Site-Scripting-Angriffe verhindert). Dieser Cookie wird automatisch vom Flask
+                LoginManager gesetzt.
+            </li>
+            <li>
+                Das HttpOnly-Cookie allein schützt die Website nicht vollständig. Wenn
+                ein Benutzer angemeldet ist und eine andere Website öffnet, könnte diese andere Website
+                Anfragen an unsere Website senden. Da der Benutzer angemeldet ist, existiert der HttpOnly-Cookie,
+                sodass die Anfrage ausgeführt wird. Um sicherzustellen, dass nur Anfragen von unserer eigenen
+                Website ausgeführt werden, fügt das Backend eine zufällige Zeichenfolge (den CSRF-Token) als
+                Cookie hinzu. Dieser Cookie kann von JavaScript gelesen werden. Jede Anfrage an unser Backend muss
+                dann den Wert dieses Cookies, also den CSRF-Token, enthalten. Eine Anfrage wird vom
+                Backend nur verarbeitet, wenn der empfangene CSRF-Token mit dem zuvor gesetzten
+                übereinstimmt. Der CSRF-Token wird zur zusätzlichen Sicherheit nach jeder Anfrage geändert. Dies
+                verhindert Cross-Site-Request-Forgery (CSRF)-Angriffe.
+            </li>
+        </ul>
+    </details>
+</article>
+
+<article>
+    <details open>
+        <summary><h3>Internationalisierung</h3></summary>
+            Sie können derzeit zwischen zwei Sprachen wählen, Englisch und Deutsch. Standardmäßig wird die Website
+            auf Deutsch angezeigt, wenn Sie sich in Österreich, Deutschland oder der Schweiz befinden, andernfalls
+            auf Englisch. Die Lokalisierung verwendet zwei Ansätze: Für einfache Elemente wie die Einträge in der
+            Navigationsleiste oder die Anmelde-/Registrierungsseiten werden die Werte aus einer JSON-Datei gelesen
+            (d. h. aus `en.json` oder `de.json`). Für umfangreiche Seiten, wie die 'Übersicht'-Seite, wird eine englische
+            und eine deutsche Version der gesamten Seite gespeichert. Beim Laden der Seite wird die Version geladen,
+            die der ausgewählten Sprache entspricht.
+    </details>
+</article>
+
+<article>
+    <details open>
+        <summary><h3>Video-Streaming</h3></summary>
+        Videos werden mit einem lokalen Upload-Skript in den S3-Bucket hochgeladen. Für jedes Video können drei Dateien
+        hochgeladen werden: die Videodatei, ein Vorschaubild und eine Textdatei mit dem Titel des Videos.
+        Die „Video“-Seite (die nur sichtbar ist, wenn Sie angemeldet sind) lädt den Inhalt des S3-Buckets,
+        verarbeitet ihn und gibt ihn an JavaScript zurück. JavaScript erstellt dann den HTML-Code
+        und füllt den entsprechenden Teil der „Video“-HTML-Seite.
+    </details>
+</article>
+
+<article>
+    <details open>
+        <summary><h3>Mögliche Verbesserungen</h3></summary>
+        <ul>
+            <li>Verknüpfung mit einer Domain für HTTPS-Verschlüsselung</li>
+            <li>E-Mail-Bestätigung: Derzeit gibt es keine Bestätigung, um zu überprüfen, ob die vom Benutzer angegebene E-Mail-Adresse gültig ist.</li>
+            <li>DRM-Schutz: Das Hinzufügen von DRM-Schutz zu den Videos wäre wünschenswert, um das einfache Herunterladen zu verhindern.</li>
+            <li>Ein ansprechenderes Layout.</li>
+        </ul>
+    </details>
+</article>

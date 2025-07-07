@@ -1,0 +1,118 @@
+
+.dashboard-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.dashboard-wrapper > .top-section {
+    flex-shrink: 0; /* Prevent the top welcome section from shrinking */
+}
+.dashboard-wrapper > .bottom-section {
+    flex: 1; /* Allow the bottom video section to grow and fill remaining space */
+    display: flex;
+    min-height: 0; /* This allows the flex item to shrink below its content's intrinsic size. */
+    /* flex-wrap: wrap; /* Allows items to stack on smaller screens */
+    gap: 2rem;       /* Space between player and list */
+    align-items: stretch;
+}
+
+/* separate rule for small screens */
+@media (max-width: 1000px) {
+    .dashboard-wrapper > .bottom-section {
+        display: block;
+        flex: none;
+    }
+
+    #main-video-player-container {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    #video-list-container {
+        min-width: auto;
+    }
+}
+
+/* Container for the video player, takes up more space */
+#main-video-player-container {
+    /* flex: <grow> <shrink> <basis> */
+    flex: 3 1 65%;
+    min-width: 320px;
+    min-height: 0;
+}
+
+#main-video-player {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+#video-list-container {
+    flex: 1 1 25%;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+#video-list-header {
+    flex: 0;
+}
+
+#video-list {
+    overflow-y: auto; /* Add a scrollbar only when content overflows */
+    flex: 1;
+}
+
+/* Styling for each clickable row in the video list */
+.video-link {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.video-link:hover {
+    background-color: #b2b3b5;
+}
+
+.video-link img {
+    width: 160px;
+    height: 90px;
+    margin-right: 1rem;
+    border-radius: 4px;
+    object-fit: cover;
+    pointer-events: none; /* Ensures the li's click handler is always triggered */
+}
+
+.video-link .thumbnail-placeholder {
+    width: 160px;
+    height: 90px;
+    background-color: rgb(180, 182, 184);
+    margin-right: 1rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: #b2b3b5;
+    pointer-events: none;
+}
+
+.video-link span {
+    pointer-events: none;
+    /* The following properties are for multi-line text truncation (line clamping) */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Limit to 2 lines before truncating. You can change this value. */
+    overflow: hidden;
+}
+
+.video-link.is-playing {
+    background-color: #7c7d7d; /* A distinct color for the active video */
+    font-weight: bold;
+}

@@ -1,15 +1,17 @@
 <article class="auth-form">
     <hgroup>
-        <h1>Create an Account</h1>
-        <h2>Sign up to get access to our video library.</h2>
+        <h1 data-i18n="signup_title">Sign Up</h1>
+        <h2 data-i18n="signup_subtitle">Create your account</h2>
     </hgroup>
     <form id="signup-form">
-        <input type="email" name="email" placeholder="Email" aria-label="Email" autocomplete="email" required>
-        <input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="new-password" required>
-        <button type="submit">Sign Up</button>
+        <input type="email" name="email" placeholder="Email" aria-label="Email" autocomplete="email" required data-i18n-placeholder="email_placeholder">
+        <input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="new-password" required data-i18n-placeholder="password_placeholder">
+        <button type="submit" data-i18n="signup_button">Sign Up</button>
     </form>
     <p id="error-message" style="color: red;"></p>
     <footer>
-        <small>Already have an account? <a href="/login.html" class="nav-link">Login</a></small>
+        <small>
+            <span data-i18n="signup_footer_text">Already have an account? </span><a href="/login.html" class="nav-link" data-i18n="nav_login">Login</a>
+        </small>
     </footer>
 </article>

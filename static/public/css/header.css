@@ -1,0 +1,44 @@
+/*
+ * Styles to make the main header sticky.
+ */
+
+body > header {
+    /* position: fixed removes the element from the normal document flow.
+       This means we can no longer use `margin: auto` for centering. */
+    position: fixed;
+    /* We must re-center it manually. This is the standard technique. */
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    z-index: 1020; /* A high z-index to stay on top of other content like dropdowns */
+
+    /* Ensure the header has a solid background so content doesn't show through when scrolling */
+    background-color: var(--pico-card-background-color, white);
+    
+    /* Optional: Add a subtle shadow to lift the header off the page content */
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); */
+
+    /* Add a border to the bottom for a clean separation */
+    border-bottom: 2px solid var(--pico-border, #9c9e9f);
+    margin-bottom: 10px;
+}
+
+/* When the header is fixed, it's removed from the document flow.
+   We must add padding to the top of the main content area to prevent
+   it from being hidden underneath the header. */
+#content-container {
+    padding-top: 4.5rem; /* Adjust this value as needed */
+}
+
+/* Reduce the vertical padding inside the nav bar to make the header less tall */
+body > header nav {
+    padding-top: 0.05rem;
+    padding-bottom: 0.05rem;
+}
+
+/* PicoCSS adds its own vertical padding to nav list items.
+   We override this to have full control over the header's height. */
+body > header nav ul li {
+    padding-top: 0;
+    padding-bottom: 0;
+}

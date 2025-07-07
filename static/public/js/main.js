@@ -1,5 +1,7 @@
 import { getCookie } from "./utils.js";
 import { handleRouting } from "./routing.js";
+import { initializeLanguageSwitcher, loadInitialLanguage } from "./ui.js";
+import { applyTranslations } from './i18n.js';
 import { updateAuthUI, handleFormSubmit } from './auth.js'
 import { playVideo } from './video.js';
 
@@ -53,8 +55,30 @@ contentContainer.addEventListener('click', (event) => {
 window.addEventListener('hashchange', handleRouting);
 
 // Initial page setup
-document.addEventListener('DOMContentLoaded', () => {
-    updateAuthUI();
-    // Load the initial content based on the current URL hash
-    handleRouting();
+document.addEventListener('DOMContentLoaded', async () => {
+    const body = document.body;
+    const loader = document.getElementById('page-loader');
+
+    try {
+        // Run auth check and language detection in parallel for a faster startup.
+        await Promise.all([
+            updateAuthUI(),
+            loadInitialLanguage()
+        ]);
+
+        initializeLanguageSwitcher();
+        applyTranslations(); // Apply translations to the static shell (e.g., nav 'Overview')
+        await handleRouting(); // Load the initial page content
+
+    } catch (error) {
+        console.error("Initialization failed:", error);
+        // You could display a permanent error message here if needed
+    } finally {
+        // Fade out and remove the loader, then reveal the content.
+        if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 300); // Remove after transition
+        }
+        body.classList.remove('is-loading');
+    }
 });

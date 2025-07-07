@@ -1,0 +1,9 @@
+/*
+ * Custom styles for the main navigation bar.
+ */
+
+.nav-right {
+    display: flex;
+    align-items: center; /* Vertically aligns the auth links and the flag */
+    gap: 1.5rem;         /* Creates space between the auth links and the flag */
+}

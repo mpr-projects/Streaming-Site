@@ -1,0 +1,20 @@
+{
+  "nav_overview": "Übersicht",
+  "nav_videos": "Videos",
+  "nav_logout": "Ausloggen",
+  "nav_signup": "Registrieren",
+  "nav_login": "Anmelden",
+  "login_title": "Anmelden",
+  "login_subtitle": "Willkommen zurück!",
+  "login_button": "Anmelden",
+  "login_footer_text": "Noch kein Konto? ",
+  "signup_title": "Registrieren",
+  "signup_subtitle": "Erstelle dein Konto",
+  "signup_button": "Registrieren",
+  "signup_footer_text": "Bereits ein Konto? ",
+  "email_placeholder": "E-Mail",
+  "password_placeholder": "Passwort",
+  "dashboard_welcome_title": "Willkommen auf der Video-Seite",
+  "dashboard_welcome_p1": "Hier können Sie Videos ansehen, die einige meiner Projekte zusammenfassen. Beachten Sie, dass die Videoauflösung auf dieser Seite niedriger ist als auf ",
+  "dashboard_welcome_p2": ", um Bandbreite zu sparen. Es wurden auch nicht alle Videos hochgeladen."
+}

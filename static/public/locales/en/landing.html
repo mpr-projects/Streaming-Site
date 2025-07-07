@@ -62,6 +62,18 @@
 
 <article>
     <details open>
+        <summary><h3>Internationalization</h3></summary>
+        You can currently choose between two languages, English and German. By default the website
+        will be in German if you're based in Austria, Germany or Switzerland and in English otherwise.
+        Localization uses two approaches. For simple attributes like the entries of the navigation
+        bar or the login/sign-up pages, the values are read from a json file (i.e. from en.json or de.json).
+        For large pages, like the 'Overview' page, an English and German version of the entire page is
+        saved. When loading the page the version that corresponds to the selected language is loaded.
+    </details>
+</article>
+
+<article>
+    <details open>
         <summary><h3>Video Streaming</h3></summary>
         Videos are uploaded to the S3 bucket with a local upload script. For each video three files
         can be uploaded: the video file, a thumbnail and a text file containing the label of the video.
